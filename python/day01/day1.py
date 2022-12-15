@@ -3,7 +3,7 @@ https://adventofcode.com/2022/day/1
 """
 
 from os import path
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Union
 
 INPUT_FILE = "input.txt"  # Default input file name
 
@@ -35,7 +35,21 @@ def read_file(file: str) -> List[str]:
     return values
 
 
-def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Any]]:
+def sum_calories(calorie_data: Dict[str, Dict[str, Any]]) -> None:
+    """Takes the calorie data Dict and modifies it to add up all of the
+    per-elf calorie values
+
+    Args:
+        calorie_data (dict): Dictionary of the elves and their pouch contents
+    Returns:
+        None
+    """
+    for value in calorie_data.items():
+        for calorie_value in value[1]["items"]:
+            value[1]["total"] += int(calorie_value)
+
+
+def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Union[List[int], int]]]:
     """Takes the file values and spits out a dict of dicts containing the
     elfs and their contents, like so:
 
@@ -45,27 +59,18 @@ def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Any]]:
                 "2027",
                 "1671",
             ],
-            "total": 0,
+            "total": 3698,
         },
         "elf10": {
             "items": [
-                "6933",
-                "7966",
-                "5328",
-                "2300",
-                "1691",
-                "3347",
-                "3554",
-                "3506",
-                "5778",
-                "4815",
-                "6384",
+                "6000",
+                "7000",
+                "5000",
+
             ],
-            "total": 0,
+            "total": 18000,
         },
     }
-
-    Note that total is empty here, but can be populated later.
 
     Args:
         values (list): List of the values given by AoC
@@ -83,21 +88,8 @@ def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Any]]:
         elif value == "":
             elf_number += 1
 
+    sum_calories(calorie_data)
     return calorie_data
-
-
-def sum_calories(calorie_data: Dict[str, Dict[str, Any]]) -> None:
-    """Takes the calorie data Dict and modifies it to add up all of the
-    per-elf calorie values
-
-    Args:
-        calorie_data (dict): Dictionary of the elves and their pouch contents
-    Returns:
-        None
-    """
-    for value in calorie_data.items():
-        for calorie_value in value[1]["items"]:
-            value[1]["total"] += int(calorie_value)
 
 
 def solve_part_1(calorie_data: Dict[str, Dict[str, Any]]) -> int:
@@ -159,7 +151,6 @@ def main() -> None:
     values = read_file(inputs_path)
     # Structure the data
     calorie_data = split_into_elfs(values)
-    sum_calories(calorie_data)
     # Solve for Part 1
     part1_solution = solve_part_1(calorie_data)
     print(part1_solution)
