@@ -35,20 +35,6 @@ def read_file(file: str) -> List[str]:
     return values
 
 
-def sum_calories(calorie_data: Dict[str, Dict[str, Any]]) -> None:
-    """Takes the calorie data Dict and modifies it to add up all of the
-    per-elf calorie values
-
-    Args:
-        calorie_data (dict): Dictionary of the elves and their pouch contents
-    Returns:
-        None
-    """
-    for value in calorie_data.items():
-        for calorie_value in value[1]["items"]:
-            value[1]["total"] += int(calorie_value)
-
-
 def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Union[List[int], int]]]:
     """Takes the file values and spits out a dict of dicts containing the
     elfs and their contents, like so:
@@ -77,6 +63,20 @@ def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Union[List[int], i
     Returns:
         calorie_data (dict): Dictionary of the elves and their pouch contents
     """
+
+    def sum_calories(calorie_data: Dict[str, Dict[str, Any]]) -> None:
+        """Takes the calorie data Dict and modifies it to add up all of the
+        per-elf calorie values
+
+        Args:
+            calorie_data (dict): Dictionary of the elves and their pouch contents
+        Returns:
+            None
+        """
+        for value in calorie_data.items():
+            for calorie_value in value[1]["items"]:
+                value[1]["total"] += int(calorie_value)
+
     calorie_data: Dict[str, Dict[str, Any]] = {}
     elf_number: int = 1
     # Creat Elfs
