@@ -2,37 +2,12 @@
 https://adventofcode.com/2022/day/1
 """
 
-from os import path
 from typing import Any, List, Dict, Union
+from os import path
+from shared import read_file
 
+HERE = path.abspath(path.dirname(__file__))
 INPUT_FILE = "input.txt"  # Default input file name
-
-
-def find_location() -> str:
-    """Find the absolute location of this module.
-    Args:
-        None
-    Returns:
-        here (str): The absolute path of this python script
-    """
-    here = path.abspath(path.dirname(__file__))
-    return here
-
-
-def read_file(file: str) -> List[str]:
-    """Reads the assignment input file from disk.
-    Args:
-        file (str): File name to open.
-    Returns:
-        values (list): List of the values
-    """
-    with open(file, "r", encoding="utf-8") as file_handle:
-        values = []
-        # Don't use readlines() because it keeps the newline
-        for value in file_handle.read().splitlines():
-            values.append(value)
-
-    return values
 
 
 def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Union[List[int], int]]]:
@@ -145,7 +120,7 @@ def main() -> None:
     """Main function for solving Part 1 and Part 2 of AoC day 1"""
 
     # Construct the full path to the input file
-    inputs_path = f"{find_location()}/{INPUT_FILE}"
+    inputs_path = f"{HERE}/{INPUT_FILE}"
     # Read the values from the input file
     values = read_file(inputs_path)
     # Structure the data
