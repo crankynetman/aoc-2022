@@ -83,8 +83,7 @@ def split_into_elfs(values: List[str]) -> Dict[str, Dict[str, Union[List[int], i
     for value in values:
         if value != "":
             calorie_data.setdefault(f"elf{elf_number}", {"items": [], "total": 0})
-            if value not in calorie_data[f"elf{elf_number}"]:
-                calorie_data[f"elf{elf_number}"]["items"].append(value)
+            calorie_data[f"elf{elf_number}"]["items"].append(value)
         elif value == "":
             elf_number += 1
 
@@ -138,7 +137,7 @@ def solve_part_2(elf_totals: Dict[str, int], top_quantity: int = 3) -> int:
         solution (int): The sum of how many calories the top N elves have.
     """
     solution_list = sorted(elf_totals.values())[-top_quantity:]
-    solution = int(sum(solution_list))
+    solution = sum(solution_list)
     return solution
 
 
